@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<body>
+  <%- include('./header'); %>
+    <div class="main">
+      <%- include('./error_messages'); %>
+        <% if(isAuth) { %>
+          <div class="container">
+            <form action="/" method="post">
+              <label>タスクの追加</label>
+              <input required type="text" name="add" placeholder="何をする?" />
+              <input required type="date" id="today" name="task_date" />
+              <input required type="time" id="now_time" name="task_time" />
+              <input class="btn btn-info" type="submit" value="追加" />
+            </form>
+            <div class="task">
+              <h3>タスク一覧</h3>
+            </div>
+            <table border="1" class="table">
+              <tr>
+                <th>チェック</th>
+                <th>状態</th>
+                <th>タスク名</th>
+                <th>納期</th>
+                <th></th>
+                <th></th>
+              </tr>
+              <% for(let todo of todos){ %>
+                <tr>
+                  <td><input type="checkbox" class="checks" name='checkbox' value="<%= todo.id %>"></td>
+                  <td>
+                    <% if(todo.status=='未完了' ) { %>
+                      <span class="text-danger">
+                        <%= todo.status %>
+                      </span>
+                      <% } else { %>
+                        <span class="text-primary">
+                          <%= todo.status %>
+                        </span>
+                        <% } %>
+                  </td>
+                  <td>
+                    <span>
+                      <%= todo.content %>
+                    </span>
+                  </td>
+                  <td>
+                    <span>
+                      <%= todo.date %>
+                        <%= todo.time %>
+                    </span>
+                  </td>
+                  <td>
+                    <form action="/modify" method="GET">
+                      <input type="hidden" name="default_taskid" value="<%= todo.id %>" />
+                      <input type="hidden" name="default_task" value="<%= todo.content %>" />
+                      <input type="hidden" name="default_date" value="<%= todo.date %>" />
+                      <input type="hidden" name="default_time" value="<%= todo.time %>" />
+                      <input class="btn btn-primary" type="submit" value="編集" />
+                    </form>
+                  </td>
+                  <td>
+                    <% if(todo.status=='未完了' ) { %>
+                      <form action="/statusbutton" method="post" id="delete">
+                        <input type="hidden" name="task_id" value="<%= todo.id %>" />
+                        <button class="btn btn-dark" type='submit'>完了</button>
+                      </form>
+                      <% } %>
+                  </td>
+                </tr>
+                <% } %>
+            </table>
+
+            <form action="/deletebutton" name="deleteform" method="POST">
+              <div align=left>
+                <button class="btn btn-danger" type="button" onclick="deleteRow()">選択したタスクの削除</button>
+                <input type="hidden" id="delete_task_id" name="delete_task_id" />
+              </div>
+            </form>
+
+            <script>
+              function deleteRow() {
+                const checkedList = document.querySelectorAll(".table [name='checkbox']:checked");
+                if (checkedList.length === 0) {
+                  alert("選択してください");
+                  return;
+                }
+                if (!confirm("削除しますか？")) {
+                  return;
+                }
+
+                getValue();
+                document.deleteform.submit();
+
+                function getValue() {
+                  var checks = document.getElementsByClassName('checks');
+                  var str = '';
+                  var taskids = [];
+
+                  for (i = 0; i < checks.length; i++) {
+                    if (checks[i].checked === true) {
+                      if (str == '') {
+                        str += checks[i].value;
+                      } else {
+                        str += "," + checks[i].value;
+                      }
+                    }
+                  }
+
+                  document.getElementById("delete_task_id").value = str;
+                }
+              }
+
+              // 現在の日付、時間セット
+              window.onload = function () {
+
+                const date = new Date()
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+                const hour = formatTime(date.getHours());
+                const minute = formatTime(date.getMinutes());
+                const second = formatTime(date.getSeconds());
+
+                // 2桁にする関数
+                const toTwoDigits = function (num, digit) {
+                  num += ''
+                  if (num.length < digit) {
+                    num = '0' + num
+                  }
+                  return num
+                }
+
+                function formatTime(val) {
+                  let str = val.toString();
+                  if (str.length === 1) {
+                    str = '0' + str;
+                  }
+                  return str;
+                }
+
+                const yyyy = toTwoDigits(year, 4)
+                const mm = toTwoDigits(month, 2)
+                const dd = toTwoDigits(day, 2)
+
+                const ymd = yyyy + "-" + mm + "-" + dd;
+                var now_time = hour + ":" + minute;
+
+                document.getElementById("now_time").value = now_time;
+                document.getElementById("today").value = ymd;
+              }
+
+
+
+            </script>
+          </div>
+          <% } else { %>
+            <h1 class="text-center">Welcome to the TodoApp!!</h1>
+            <% } %>
+
+              <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+                integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+                crossorigin="anonymous"></script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+                integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+                crossorigin="anonymous"></script>
+
+
+</body>
+</div>
+
+</html>
