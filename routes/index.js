@@ -84,7 +84,6 @@ router.post('/', function (req, res, next) {
     });
 });
 
-
 // index.jsでこのモジュールを使用
 router.use('/signup', require('./signup'));
 router.use('/signin', require('./signin'));
