@@ -15,6 +15,7 @@
       <%- include('./error_messages'); %>
         <% if(isAuth) { %>
           <div class="container">
+            <div class="center-block m-3">
             <form action="/" method="post">
               <label>タスクの追加</label>
               <input required type="text" name="add" placeholder="何をする?" />
@@ -22,10 +23,11 @@
               <input required type="time" id="now_time" name="task_time" />
               <input class="btn btn-info" type="submit" value="追加" />
             </form>
-            <div class="task">
+            </div>
+            <div class="task text-center">
               <h3>タスク一覧</h3>
             </div>
-            <table border="1" class="table">
+            <table border="1" class="table m-5">
               <tr>
                 <th>チェック</th>
                 <th>状態</th>
