@@ -3,7 +3,7 @@ const router = express.Router();
 // knexeを利用
 const knex = require("../db/knex");
 
-// 完了状態にする
+// 未完了状態にする
 router.post('/', function (req, res, next) {
     const userId = req.session.userid;
     const isAuth = Boolean(userId);
@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
 
     knex("tasks")
         .where({ id: taskid })
-        .update({ status: '完了' })
+        .update({ status: '未完了' })
         .then(function () {
             res.redirect('/')
         })
