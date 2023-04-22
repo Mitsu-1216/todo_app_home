@@ -93,5 +93,6 @@ router.use('/completebutton', require('./completebutton'));
 router.use('/incompletebutton', require('./incompletebutton'));
 router.use('/deletebutton', require('./deletebutton'));
 router.use('/modify', require('./modify'));
+router.use('/user', require('./user'));
 
 module.exports = router;
