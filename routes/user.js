@@ -4,12 +4,11 @@ const router = express.Router();
 const knex = require("../db/knex");
 
 //select文を書く
-
 router.get('/', function (req, res, next) {
     const userId = req.session.userid;
     const isAuth = Boolean(userId);
-    res.render('signin', {
-        title: '★Sign in★',
+    res.render('user', {
+        title: 'user★',
         isAuth: isAuth
     });
 });
@@ -21,27 +20,18 @@ router.post('/', function (req, res, next) {
     const password = req.body.password;
 
     knex("users")
-        .where({
-            "name": username,
-            "password": password,
-        })
         .select("*")
         .then((results) => {
-            if (results.length === 0) {
-                res.render("signin", {
-                    title: "Sign in",
-                    isAuth: isAuth,
-                    errorMessage: ["ユーザが見つかりません"],
-                });
-            } else {
-                req.session.userid = results[0].id;
-                res.redirect('/');
-            }
+            res.render("user", {
+                title: "user",
+                results:results,
+                isAuth: isAuth,
+            });        
         })
         .catch(function (err) {
             console.error(err);
-            res.render("signin", {
-                title: "Sign in",
+            res.render("user", {
+                title: "user",
                 isAuth: isAuth,
                 errorMessage: [err.sqlMessage],
             });
