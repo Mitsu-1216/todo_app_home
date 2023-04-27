@@ -6,6 +6,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
+        <!-- headerを読み込む際にisAuthをきちんと渡すこと！ -->
         <% if(isAuth){ %>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
