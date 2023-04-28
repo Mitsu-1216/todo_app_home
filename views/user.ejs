@@ -18,11 +18,13 @@
                               <tr>
                                     <th>ユーザid</th>
                                     <th>ユーザネーム</th>
+                                    <th>パスワード</th>
                               </tr>
                               <% for(let result of results){ %>
                               <tr>
                                     <td><%= result.id %></td>
                                     <td><%= result.name %></td>
+                                    <td><%= result.password %></td>
                               </tr>
                               <% } %>
                         </table>
