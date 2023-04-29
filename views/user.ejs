@@ -19,12 +19,14 @@
                                     <th>ユーザid</th>
                                     <th>ユーザネーム</th>
                                     <th>パスワード</th>
+                                    <th>アカウントの種類</th>
                               </tr>
                               <% for(let result of results){ %>
                               <tr>
                                     <td><%= result.id %></td>
                                     <td><%= result.name %></td>
                                     <td><%= result.password %></td>
+                                    <td>未定</td>
                               </tr>
                               <% } %>
                         </table>
