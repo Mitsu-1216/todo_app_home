@@ -20,6 +20,7 @@
                                     <th>ユーザネーム</th>
                                     <th>パスワード</th>
                                     <th>アカウントの種類</th>
+                                    <th></th>
                               </tr>
                               <% for(let result of results){ %>
                               <tr>
@@ -32,6 +33,13 @@
                                           <td>一般</td>
                                     <% } %>
                               </tr>
+                              <td><form action="/modify" method="POST">
+                                    <input type="hidden" name="default_taskid" value="<%= result.id %>" />
+                                    <input type="hidden" name="default_task" value="<%= result.name %>" />
+                                    <input type="hidden" name="default_date" value="<%= result.password %>" />
+                                    <input type="hidden" name="default_time" value="<%= result.admin_flg %>" />
+                                    <input class="btn btn-primary" type="submit" value="編集" />
+                              </form></td>
                               <% } %>
                         </table>
 
