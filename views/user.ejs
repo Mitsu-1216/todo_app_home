@@ -26,7 +26,11 @@
                                     <td><%= result.id %></td>
                                     <td><%= result.name %></td>
                                     <td><%= result.password %></td>
-                                    <td>未定</td>
+                                    <% if(result.admin_flg===1){ %>
+                                          <td>管理者</td>
+                                    <% } else { %>
+                                          <td>一般</td>
+                                    <% } %>
                               </tr>
                               <% } %>
                         </table>
