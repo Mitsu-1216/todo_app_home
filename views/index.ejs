@@ -63,7 +63,7 @@
                   </td>
                   <td>
                     <form action="/modify" method="GET">
-                      <input type="hidden" name="default_taskid" value="<%= todo.id %>" />
+                      <input id="button_<%= todo.id %>" type="hidden" name="default_taskid" value="<%= todo.id %>" />
                       <input type="hidden" name="default_task" value="<%= todo.content %>" />
                       <input type="hidden" name="default_date" value="<%= todo.date %>" />
                       <input type="hidden" name="default_time" value="<%= todo.time %>" />
