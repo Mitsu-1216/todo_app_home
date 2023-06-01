@@ -95,7 +95,7 @@
             </form>
 
             <form action="user" method="post">
-              <button class="btn btn-danger" type='submit'>ユーザー一覧へ</button>
+              <button id="button_" class="btn btn-danger" type='submit'>ユーザー一覧へ</button>
             </form>
 
             <script>
@@ -130,6 +130,18 @@
                   document.getElementById("delete_task_id").value = str;
                 }
               }
+
+              window.addEventListener('load', loadFinished);
+              function loadFinished() {
+                const buttonLeft = document.getElementById("button_").getBoundingClientRect().left;
+                const buttonTop = document.getElementById("button_").getBoundingClientRect().top;
+                window.scrollTo({
+                  left: buttonLeft,
+                  top: buttonTop,
+                  behavior: 'smooth'
+                });
+              };
+
 
               // 現在の日付、時間セット
               window.onload = function () {
