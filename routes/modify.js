@@ -27,8 +27,7 @@ router.post('/', function (req, res, next) {
     const modify_taskid = req.body.modify_taskid;
     const modify_task = req.body.modify_task;
     const modify_date = req.body.modify_date;
-    const modify_time = req.body.modify_time;
-
+    const modify_time = req.body.modify_time
     
     knex("tasks")
         .where({ "id": modify_taskid })
